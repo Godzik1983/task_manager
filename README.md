@@ -1,5 +1,7 @@
 # codex-task-manager
 
+[![Tests](https://github.com/Godzik1983/task_manager/actions/workflows/tests.yml/badge.svg)](https://github.com/Godzik1983/task_manager/actions/workflows/tests.yml)
+
 ## Project Structure
 
 ```text
