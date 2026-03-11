@@ -1,6 +1,7 @@
 # codex-task-manager
 
 [![Tests](https://github.com/Godzik1983/task_manager/actions/workflows/tests.yml/badge.svg)](https://github.com/Godzik1983/task_manager/actions/workflows/tests.yml)
+[![Deploy](https://github.com/Godzik1983/task_manager/actions/workflows/deploy.yml/badge.svg)](https://github.com/Godzik1983/task_manager/actions/workflows/deploy.yml)
 
 ## Project Structure
 
@@ -72,3 +73,31 @@ venv\Scripts\python -m uvicorn src.app:app --reload
 ```powershell
 venv\Scripts\python -m pytest -q
 ```
+
+## CI/CD
+
+### CI
+
+- Workflow: `.github/workflows/tests.yml`
+- Jobs:
+  - `pytest` - запускает тесты.
+  - `ruff` - запускает линт.
+
+### CD
+
+- Workflow: `.github/workflows/deploy.yml`
+- Что делает:
+  1. Собирает Docker image из `Dockerfile`.
+  2. Пушит image в GHCR (`ghcr.io/<owner>/task_manager`).
+  3. Подключается к VPS по SSH.
+  4. Выполняет `docker compose pull && docker compose up -d`.
+
+### Required GitHub Secrets
+
+- `VPS_HOST` - IP/домен VPS.
+- `VPS_PORT` - SSH порт (обычно `22`).
+- `VPS_USER` - SSH пользователь.
+- `VPS_SSH_KEY` - приватный SSH ключ для входа на VPS.
+- `VPS_APP_DIR` - директория приложения на VPS (например `/opt/task_manager`).
+- `VPS_REGISTRY_USER` - логин в GHCR.
+- `VPS_REGISTRY_TOKEN` - токен с правом чтения пакетов GHCR (`read:packages`).

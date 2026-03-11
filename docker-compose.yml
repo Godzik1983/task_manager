@@ -1,0 +1,7 @@
+services:
+  app:
+    image: ${IMAGE:-ghcr.io/godzik1983/task_manager:latest}
+    container_name: task-manager-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
